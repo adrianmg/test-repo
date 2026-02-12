@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — dark by default, light via system preference.
+ * Uses the VS Code / native-desktop palette as a baseline.
+ */
+@theme {
+  --color-surface-app: #1e1e1e;
+  --color-surface-sidebar: #252526;
+  --color-surface-main: #1e1e1e;
+  --color-surface-titlebar: #323233;
+  --color-border: #3c3c3c;
+  --color-text-primary: #cccccc;
+  --color-text-secondary: #808080;
+  --color-text-muted: #5a5a5a;
+  --color-control-hover: #3c3c3c;
+  --color-control-active: #505050;
+  --color-accent: #007acc;
+}
+
+/* ── Base resets ── */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--color-surface-app);
+  color: var(--color-text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* ── Light mode overrides ── */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-surface-app: #f8f8f8;
+    --color-surface-sidebar: #f3f3f3;
+    --color-surface-main: #ffffff;
+    --color-surface-titlebar: #e8e8e8;
+    --color-border: #e0e0e0;
+    --color-text-primary: #333333;
+    --color-text-secondary: #666666;
+    --color-text-muted: #999999;
+    --color-control-hover: #d6d6d6;
+    --color-control-active: #c4c4c4;
+    --color-accent: #005fb8;
+  }
+}
+
+/* ── Titlebar drag regions ── */
+.titlebar-drag {
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+.titlebar-no-drag {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
+}
+
+/* ── Sidebar transition ── */
+.sidebar-transition {
+  transition-property: width, opacity;
+  transition-duration: 260ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Scrollbar styling ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}

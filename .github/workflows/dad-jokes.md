@@ -13,6 +13,6 @@ safe-outputs:
   add-comment: {}
 ---
 
-Post a comment making a dad joke related to the contents. Also organize the label based on labels.
+Add a comment making a dad joke related to the contents. Also organize the label based on labels.
 
 <!-- generated with workwork -->

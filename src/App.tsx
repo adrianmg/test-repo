@@ -13,35 +13,35 @@ import {
   LayersIcon,
 } from './components/Icons'
 
-const SIDEBAR_W = 280
-const TRAFFIC_LIGHT_W = 72
+const SIDEBAR_WIDTH = 280
+const MACOS_TRAFFIC_LIGHT_WIDTH = 72
 
 function App() {
-  const { leftOpen, rightOpen, toggleLeft, toggleRight } = useSidebarState()
-  const platform = usePlatform()
-  const mod = useModKey()
-  const isMac = platform === 'mac'
+  const { leftOpen: isLeftSidebarOpen, rightOpen: isRightSidebarOpen, toggleLeft: handleToggleLeftSidebar, toggleRight: handleToggleRightSidebar } = useSidebarState()
+  const currentPlatform = usePlatform()
+  const modifierKey = useModKey()
+  const isRunningOnMacOS = currentPlatform === 'mac'
 
   /* Width the left sidebar-header contributes (excluding traffic-light spacer). */
-  const leftHeaderW = leftOpen ? SIDEBAR_W - (isMac ? TRAFFIC_LIGHT_W : 0) : 0
+  const calculatedLeftHeaderWidth = isLeftSidebarOpen ? SIDEBAR_WIDTH - (isRunningOnMacOS ? MACOS_TRAFFIC_LIGHT_WIDTH : 0) : 0
 
   return (
     <div className="flex h-full flex-col">
       {/* ───── Titlebar ───── */}
       <header className="titlebar-drag flex h-[38px] shrink-0 items-center border-b border-border bg-surface-titlebar">
         {/* macOS traffic-light spacer — always present, keeps toggle clear */}
-        {isMac && <div className="w-[72px] shrink-0" />}
+        {isRunningOnMacOS && <div className="w-[72px] shrink-0" />}
 
         {/* Left sidebar header section */}
         <div
           className="sidebar-transition flex h-full shrink-0 items-center overflow-hidden"
-          style={{ width: leftHeaderW }}
+          style={{ width: calculatedLeftHeaderWidth }}
         >
           <div
             className="sidebar-transition flex h-full items-center gap-2 px-4"
             style={{
-              width: SIDEBAR_W - (isMac ? TRAFFIC_LIGHT_W : 0),
-              opacity: leftOpen ? 1 : 0,
+              width: SIDEBAR_WIDTH - (isRunningOnMacOS ? MACOS_TRAFFIC_LIGHT_WIDTH : 0),
+              opacity: isLeftSidebarOpen ? 1 : 0,
             }}
           >
             <FolderIcon className="size-4 text-text-secondary" />
@@ -53,37 +53,37 @@ function App() {
 
         {/* Main titlebar area — toggles live here */}
         <div className="flex h-full min-w-0 flex-1 items-center justify-between gap-1 px-1">
-          <SidebarToggle
-            pressed={leftOpen}
-            onPressedChange={toggleLeft}
-            tooltip={`Toggle sidebar (${mod}+B)`}
-            side="left"
+          <SidebarToggleButton
+            isPressed={isLeftSidebarOpen}
+            onToggle={handleToggleLeftSidebar}
+            tooltipText={`Toggle sidebar (${modifierKey}+B)`}
+            panelSide="left"
           >
             <PanelLeftIcon />
-          </SidebarToggle>
+          </SidebarToggleButton>
 
           <span className="pointer-events-none truncate text-xs text-text-muted">
             Desktop App
           </span>
 
-          <SidebarToggle
-            pressed={rightOpen}
-            onPressedChange={toggleRight}
-            tooltip={`Toggle sidebar (${mod}+Shift+B)`}
-            side="right"
+          <SidebarToggleButton
+            isPressed={isRightSidebarOpen}
+            onToggle={handleToggleRightSidebar}
+            tooltipText={`Toggle sidebar (${modifierKey}+Shift+B)`}
+            panelSide="right"
           >
             <PanelRightIcon />
-          </SidebarToggle>
+          </SidebarToggleButton>
         </div>
 
         {/* Right sidebar header section */}
         <div
           className="sidebar-transition flex h-full shrink-0 items-center overflow-hidden"
-          style={{ width: rightOpen ? SIDEBAR_W : 0 }}
+          style={{ width: isRightSidebarOpen ? SIDEBAR_WIDTH : 0 }}
         >
           <div
             className="sidebar-transition flex h-full items-center gap-2 px-4"
-            style={{ width: SIDEBAR_W, opacity: rightOpen ? 1 : 0 }}
+            style={{ width: SIDEBAR_WIDTH, opacity: isRightSidebarOpen ? 1 : 0 }}
           >
             <InfoIcon className="size-4 text-text-secondary" />
             <span className="truncate text-xs font-semibold uppercase tracking-wider text-text-secondary">
@@ -98,31 +98,31 @@ function App() {
         {/* Left sidebar */}
         <aside
           className="sidebar-transition shrink-0 overflow-hidden border-r border-border bg-surface-sidebar"
-          style={{ width: leftOpen ? SIDEBAR_W : 0 }}
+          style={{ width: isLeftSidebarOpen ? SIDEBAR_WIDTH : 0 }}
         >
           <div
             className="sidebar-transition h-full"
-            style={{ width: SIDEBAR_W, opacity: leftOpen ? 1 : 0 }}
+            style={{ width: SIDEBAR_WIDTH, opacity: isLeftSidebarOpen ? 1 : 0 }}
           >
-            <LeftSidebarContent />
+            <LeftSidebarPanelContent />
           </div>
         </aside>
 
         {/* Main */}
         <main className="flex min-w-0 flex-1 flex-col overflow-auto bg-surface-main">
-          <MainContent />
+          <MainContentArea />
         </main>
 
         {/* Right sidebar */}
         <aside
           className="sidebar-transition shrink-0 overflow-hidden border-l border-border bg-surface-sidebar"
-          style={{ width: rightOpen ? SIDEBAR_W : 0 }}
+          style={{ width: isRightSidebarOpen ? SIDEBAR_WIDTH : 0 }}
         >
           <div
             className="sidebar-transition h-full"
-            style={{ width: SIDEBAR_W, opacity: rightOpen ? 1 : 0 }}
+            style={{ width: SIDEBAR_WIDTH, opacity: isRightSidebarOpen ? 1 : 0 }}
           >
-            <RightSidebarContent />
+            <RightSidebarPanelContent />
           </div>
         </aside>
       </div>
@@ -132,17 +132,17 @@ function App() {
 
 /* ───── Toggle button with tooltip (Base UI) ───── */
 
-function SidebarToggle({
-  pressed,
-  onPressedChange,
-  tooltip,
-  side,
+function SidebarToggleButton({
+  isPressed,
+  onToggle,
+  tooltipText,
+  panelSide,
   children,
 }: {
-  pressed: boolean
-  onPressedChange: () => void
-  tooltip: string
-  side: 'left' | 'right'
+  isPressed: boolean
+  onToggle: () => void
+  tooltipText: string
+  panelSide: 'left' | 'right'
   children: React.ReactNode
 }) {
   return (
@@ -151,9 +151,9 @@ function SidebarToggle({
         <Tooltip.Trigger
           render={
             <Toggle
-              pressed={pressed}
-              onPressedChange={onPressedChange}
-              aria-label={tooltip}
+              pressed={isPressed}
+              onPressedChange={onToggle}
+              aria-label={tooltipText}
               className="titlebar-no-drag inline-flex size-7 items-center justify-center rounded text-text-secondary transition-colors hover:bg-control-hover hover:text-text-primary focus-visible:ring-1 focus-visible:ring-accent focus-visible:outline-none data-[pressed]:text-accent"
             />
           }
@@ -161,9 +161,9 @@ function SidebarToggle({
           {children}
         </Tooltip.Trigger>
         <Tooltip.Portal>
-          <Tooltip.Positioner side={side === 'left' ? 'right' : 'left'} sideOffset={6}>
+          <Tooltip.Positioner side={panelSide === 'left' ? 'right' : 'left'} sideOffset={6}>
             <Tooltip.Popup className="rounded bg-surface-titlebar px-2 py-1 text-xs text-text-primary shadow-lg ring-1 ring-border">
-              {tooltip}
+              {tooltipText}
             </Tooltip.Popup>
           </Tooltip.Positioner>
         </Tooltip.Portal>
@@ -189,7 +189,7 @@ const treeItems = [
   { label: 'vite.config.ts', kind: 'file' as const, indent: 0 },
 ]
 
-function LeftSidebarContent() {
+function LeftSidebarPanelContent() {
   return (
     <div className="flex h-full flex-col">
       {/* Search */}
@@ -225,7 +225,7 @@ function LeftSidebarContent() {
   )
 }
 
-function RightSidebarContent() {
+function RightSidebarPanelContent() {
   const properties = [
     { key: 'Name', value: 'App.tsx' },
     { key: 'Type', value: 'TypeScript React' },
@@ -265,8 +265,8 @@ function RightSidebarContent() {
   )
 }
 
-function MainContent() {
-  const mod = useModKey()
+function MainContentArea() {
+  const modifierKey = useModKey()
   return (
     <div className="flex flex-1 items-center justify-center p-8">
       <div className="max-w-md text-center">
@@ -278,15 +278,15 @@ function MainContent() {
           keyboard shortcuts. Built with React, Tailwind CSS, and Base UI.
         </p>
         <div className="inline-flex flex-col gap-2 rounded-lg border border-border bg-surface-sidebar p-4 text-left">
-          <Shortcut keys={[mod, 'B']} label="Toggle left sidebar" />
-          <Shortcut keys={[mod, 'Shift', 'B']} label="Toggle right sidebar" />
+          <KeyboardShortcutDisplay keys={[modifierKey, 'B']} label="Toggle left sidebar" />
+          <KeyboardShortcutDisplay keys={[modifierKey, 'Shift', 'B']} label="Toggle right sidebar" />
         </div>
       </div>
     </div>
   )
 }
 
-function Shortcut({ keys, label }: { keys: string[]; label: string }) {
+function KeyboardShortcutDisplay({ keys, label }: { keys: string[]; label: string }) {
   return (
     <div className="flex items-center justify-between gap-4">
       <span className="text-xs text-text-secondary">{label}</span>

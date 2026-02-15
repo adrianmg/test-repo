@@ -154,6 +154,7 @@ function SidebarToggle({
               pressed={pressed}
               onPressedChange={onPressedChange}
               aria-label={tooltip}
+              aria-expanded={pressed}
               className="titlebar-no-drag inline-flex size-7 items-center justify-center rounded text-text-secondary transition-colors hover:bg-control-hover hover:text-text-primary focus-visible:ring-1 focus-visible:ring-accent focus-visible:outline-none data-[pressed]:text-accent"
             />
           }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-const STORAGE_KEY = 'native-layout:sidebar'
+const STORAGE_KEY = 'sidebar-state'
 
 interface SidebarState {
   leftOpen: boolean

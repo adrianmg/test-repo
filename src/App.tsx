@@ -63,7 +63,7 @@ function App() {
           </SidebarToggle>
 
           <span className="pointer-events-none truncate text-xs text-text-muted">
-            Desktop App
+            My App
           </span>
 
           <SidebarToggle

@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.4",
+  "checkpoint_id": "5fe261fbba83",
+  "session_id": "ses_3a01d7463ffeI8HzvEeLxCiAbD",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-15T06:03:25.111431Z",
+  "branch": "claude/native-desktop-layout-9YnIX",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "hello.txt",
+    "poem.md"
+  ],
+  "agent": "OpenCode",
+  "token_usage": {
+    "input_tokens": 0,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 0,
+    "output_tokens": 0,
+    "api_call_count": 0
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-15T06:03:25.097574Z",
+    "agent_lines": 17,
+    "human_added": 138,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 155,
+    "agent_percentage": 10.967741935483872
+  }
+}

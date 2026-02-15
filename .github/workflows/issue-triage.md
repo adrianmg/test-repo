@@ -3,11 +3,20 @@ on:
   issues:
     types:
       - opened
-  - workflow_dispatch
+  workflow_dispatch: null
 engine: copilot
 tools:
   - github
   - web-fetch
+safe-outputs:
+  - id: label-issue
+    description: Add labels to the triaged issue
+    permissions:
+      issues: write
+  - id: comment-issue
+    description: Post triage analysis as comment
+    permissions:
+      issues: write
 ---
 
 You are an issue triage bot for this repository.
@@ -26,3 +35,5 @@ When a new issue is opened, analyze it and perform the following:
    - Related issues if any exist
 
 Be concise but thorough. Use the repository's existing labels when possible.
+
+<!-- generated with workwork -->

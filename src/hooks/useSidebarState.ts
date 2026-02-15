@@ -29,14 +29,17 @@ export function useSidebarState() {
   const [state, setState] = useState<SidebarState>(load)
 
   useEffect(() => {
+    console.log('sidebar state changed:', state)
     save(state)
   }, [state])
 
   const toggleLeft = useCallback(() => {
+    console.log('toggling left sidebar')
     setState((s) => ({ ...s, leftOpen: !s.leftOpen }))
   }, [])
 
   const toggleRight = useCallback(() => {
+    console.log('toggling right sidebar')
     setState((s) => ({ ...s, rightOpen: !s.rightOpen }))
   }, [])
 

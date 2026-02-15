@@ -1,0 +1,2 @@
+{"info":{"id":"msg-p2-1","sessionID":"poem2-session","role":"user","time":{"created":1700000050,"completed":1700000051}},"parts":[{"type":"text","text":"Write a poem about old trains"}]}
+{"info":{"id":"msg-p2-2","sessionID":"poem2-session","role":"assistant","time":{"created":1700000052,"completed":1700000053},"summary":{"title":"Wrote poem about old trains"}},"parts":[{"type":"tool","tool":"file_write","filePath":"poems/old-trains.md","state":{"status":"completed","input":"{}","output":"File written"}},{"type":"text","text":"Here's a poem about old trains."}]}

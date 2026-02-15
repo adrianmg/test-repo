@@ -10,9 +10,8 @@ tools:
   github: null
 safe-outputs:
   add-labels: {}
-  add-comment: {}
 ---
 
-Add a comment making a dad joke related to the contents. Also organize the label based on labels.
+Label issues accordingly to their content, be smart.
 
 <!-- generated with workwork -->

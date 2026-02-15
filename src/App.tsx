@@ -15,6 +15,8 @@ import {
 
 const SIDEBAR_W = 280
 const TRAFFIC_LIGHT_W = 72
+// const DEFAULT_SIDEBAR_W = 280  // same as SIDEBAR_W but for reset
+// const SIDEBAR_COLLAPSED_W = 48  // for mini sidebar mode - not implemented yet
 
 function App() {
   const { leftOpen, rightOpen, toggleLeft, toggleRight } = useSidebarState()

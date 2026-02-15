@@ -9,14 +9,8 @@ tools:
   - github
   - web-fetch
 safe-outputs:
-  - id: label-issue
-    description: Add labels to the triaged issue
-    permissions:
-      issues: write
-  - id: comment-issue
-    description: Post triage analysis as comment
-    permissions:
-      issues: write
+  add-labels: {}
+  add-comment: {}
 ---
 
 You are an issue triage bot for this repository.

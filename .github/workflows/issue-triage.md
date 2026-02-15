@@ -6,8 +6,8 @@ on:
   workflow_dispatch: null
 engine: copilot
 tools:
-  - github
-  - web-fetch
+  github: null
+  web-fetch: null
 safe-outputs:
   add-labels: {}
   add-comment: {}

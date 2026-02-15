@@ -12,6 +12,7 @@ import {
   InfoIcon,
   LayersIcon,
 } from './components/Icons'
+import { fileTreeItems } from './data/fileTree'
 
 const SIDEBAR_W = 280
 const TRAFFIC_LIGHT_W = 72
@@ -174,21 +175,6 @@ function SidebarToggle({
 
 /* ───── Demo sidebar content ───── */
 
-const treeItems = [
-  { label: 'src', kind: 'folder' as const, indent: 0 },
-  { label: 'components', kind: 'folder' as const, indent: 1 },
-  { label: 'Icons.tsx', kind: 'file' as const, indent: 2 },
-  { label: 'hooks', kind: 'folder' as const, indent: 1 },
-  { label: 'useSidebarState.ts', kind: 'file' as const, indent: 2 },
-  { label: 'usePlatform.ts', kind: 'file' as const, indent: 2 },
-  { label: 'App.tsx', kind: 'file' as const, indent: 1 },
-  { label: 'index.css', kind: 'file' as const, indent: 1 },
-  { label: 'main.tsx', kind: 'file' as const, indent: 1 },
-  { label: 'package.json', kind: 'file' as const, indent: 0 },
-  { label: 'tsconfig.json', kind: 'file' as const, indent: 0 },
-  { label: 'vite.config.ts', kind: 'file' as const, indent: 0 },
-]
-
 function LeftSidebarContent() {
   return (
     <div className="flex h-full flex-col">
@@ -200,7 +186,7 @@ function LeftSidebarContent() {
 
       {/* File tree */}
       <nav className="flex-1 overflow-y-auto px-1 py-1">
-        {treeItems.map((item) => (
+        {fileTreeItems.map((item) => (
           <div
             key={item.label}
             className="flex cursor-default items-center gap-1.5 rounded px-2 py-[3px] hover:bg-control-hover"

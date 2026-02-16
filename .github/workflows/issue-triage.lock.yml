@@ -22,14 +22,13 @@
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
 #
-# frontmatter-hash: 9fb3824898470ea2c3be9e553f331eb7d7087b404fd75ad1f4a6da33d7de7376
+# frontmatter-hash: 0f932350a5413f493457ab4ac7c9929070cec457a3563e6beea3a5a0f3c8797c
 
 name: "Issue Triage"
 "on":
   issues:
     types:
     - opened
-  workflow_dispatch:
 
 permissions: {}
 

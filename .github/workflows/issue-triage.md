@@ -3,7 +3,6 @@ on:
   issues:
     types:
       - opened
-  workflow_dispatch: null
 engine: copilot
 tools:
   github: null

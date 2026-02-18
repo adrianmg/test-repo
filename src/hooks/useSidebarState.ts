@@ -25,6 +25,14 @@ function save(state: SidebarState) {
   }
 }
 
+/** Returns true if the active element is editable (input, textarea, contenteditable). */
+function isEditableElement(el: Element | null): boolean {
+  if (!el) return false
+  const tag = el.tagName
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true
+  return (el as HTMLElement).isContentEditable
+}
+
 export function useSidebarState() {
   const [state, setState] = useState<SidebarState>(load)
 
@@ -43,6 +51,8 @@ export function useSidebarState() {
   // Keyboard shortcuts: Cmd/Ctrl+B → left, Cmd/Ctrl+Shift+B → right
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
+      if (isEditableElement(document.activeElement)) return
+
       const mod = e.metaKey || e.ctrlKey
       if (!mod || e.key.toLowerCase() !== 'b') return
 

@@ -7,17 +7,21 @@ on:
 engine: copilot
 permissions:
   contents: read
-  issues: read
+  issues: write
 tools:
   github:
     toolsets:
       - repos
       - issues
       - search
+      - notifications
 safe-outputs:
-  add-labels: {}
-  add-comment: {}
+  add-labels:
+    target: "*"
+  add-comment:
+    target: "*"
   close-issue:
+    target: "*"
     required-labels:
       - duplicate
 sandbox:
@@ -49,5 +53,7 @@ For each issue you triage:
 5. **If the issue is a duplicate**: add the `duplicate` label (if it exists), comment with a link to the original, then close it.
 
 Be concise but thorough. Use the repository's existing labels when possible.
+
+After handling the triggering item, mark the related notification as read.
 
 <!-- generated with workwork -->

@@ -3,6 +3,7 @@ on:
   issues:
     types:
       - opened
+  workflow_dispatch: null
 engine: copilot
 tools:
   github: null
@@ -10,6 +11,8 @@ tools:
 safe-outputs:
   add-labels: {}
   add-comment: {}
+sandbox:
+  agent: false
 ---
 
 You are an issue triage bot for this repository.
@@ -25,8 +28,9 @@ When a new issue is opened, analyze it and perform the following:
 4. **Post a comment** with your triage analysis including:
    - Category and priority with reasoning
    - Suggested next steps for contributors
-   - Related issues if any exist
-5. Close duplicated issues automatically.
+   - Related issues with links if any exist
+   - Links to any referred issues you mention
+5. **Close duplicated issues** leaving a comment linking to the original.
 
 Be concise but thorough. Use the repository's existing labels when possible.
 

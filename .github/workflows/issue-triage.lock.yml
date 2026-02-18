@@ -22,7 +22,7 @@
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
 #
-# frontmatter-hash: 449f888077e6e2a97d442dccd954e66f230cea7600c863ec53843ef8c5a883da
+# frontmatter-hash: 0666d65c95fa8a5b73cd5b8b7d2de4a11b37e9f9150e944a2a177e0f9d4b6399
 
 name: "Issue Triage"
 "on":
@@ -487,7 +487,7 @@ jobs:
                   "GITHUB_LOCKDOWN_MODE": "$GITHUB_MCP_LOCKDOWN",
                   "GITHUB_PERSONAL_ACCESS_TOKEN": "\${GITHUB_MCP_SERVER_TOKEN}",
                   "GITHUB_READ_ONLY": "1",
-                  "GITHUB_TOOLSETS": "repos,issues,search,notifications"
+                  "GITHUB_TOOLSETS": "repos,issues,search"
                 }
               },
               "safeoutputs": {

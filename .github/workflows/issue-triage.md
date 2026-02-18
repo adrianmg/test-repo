@@ -13,6 +13,7 @@ safe-outputs:
   add-comment: {}
 sandbox:
   agent: false
+strict: false
 ---
 
 You are an issue triage bot for this repository.

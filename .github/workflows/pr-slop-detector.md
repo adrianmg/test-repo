@@ -4,13 +4,26 @@ on:
     types:
       - opened
       - synchronize
+  workflow_dispatch: null
 engine: copilot
+permissions:
+  contents: read
+  pull-requests: write
+  notifications: read
 tools:
-  github: null
+  github:
+    toolsets:
+      - repos
+      - pull_requests
+      - search
+      - notifications
 safe-outputs:
   add-comment: {}
+  add-labels: {}
   close-pull-request: {}
-  submit-pull-request-review: {}
+sandbox:
+  agent: false
+strict: false
 ---
 
 You are a code quality reviewer focused on detecting AI-generated code patterns ("slop").
@@ -32,6 +45,10 @@ For each issue found:
 Rate the overall PR slop score from 0-10 (0 = pristine, 10 = full slop).
 Post your review as a PR comment with the score and detailed findings.
 
-Close the PR if it’s identified as a slop right away.
+If the score is 7-10, add a `slop-high` label (if it exists), leave a short closing note referencing the review, and close the PR. Invite a cleaned-up resubmission.
+
+If the PR is a duplicate of another open PR, add the `duplicate` label (if it exists), link to the original in a comment, and close it.
+
+After handling the triggering item, mark the related notification as read.
 
 <!-- generated with workwork -->

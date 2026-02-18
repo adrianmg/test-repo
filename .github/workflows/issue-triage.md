@@ -10,7 +10,6 @@ permissions:
   issues: read
 tools:
   github:
-    mode: remote
     toolsets:
       - repos
       - issues

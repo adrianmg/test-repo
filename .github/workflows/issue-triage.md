@@ -26,6 +26,7 @@ When a new issue is opened, analyze it and perform the following:
    - Category and priority with reasoning
    - Suggested next steps for contributors
    - Related issues if any exist
+5. Close duplicated issues automatically.
 
 Be concise but thorough. Use the repository's existing labels when possible.
 

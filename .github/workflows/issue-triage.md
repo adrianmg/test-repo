@@ -7,23 +7,17 @@ on:
 engine: copilot
 permissions:
   contents: read
-  issues: write
+  issues: read
+  pull-requests: read
 tools:
   github:
     toolsets:
       - repos
       - issues
       - search
-      - notifications
 safe-outputs:
-  add-labels:
-    target: "*"
   add-comment:
     target: "*"
-  close-issue:
-    target: "*"
-    required-labels:
-      - duplicate
 sandbox:
   agent: false
 strict: false
@@ -44,16 +38,28 @@ For each issue you triage:
    - Impact on users (crash vs cosmetic)
    - Reproducibility (always vs intermittent)
    - Affected scope (core vs edge case)
-3. **Add labels** matching the category and priority
+3. **Recommend labels** that match the category and priority
 4. **Post a comment** with your triage analysis including:
    - Category and priority with reasoning
    - Suggested next steps for contributors
    - Related issues with links if any exist
    - Links to any referred issues you mention
-5. **If the issue is a duplicate**: add the `duplicate` label (if it exists), comment with a link to the original, then close it.
+5. **If the issue is a duplicate**: note the original issue number and recommend the `duplicate` label.
+
+After your summary, include this machine-readable block for follow-up automation:
+
+<!-- workwork-triage -->
+```json
+{"labels":["bug","priority:high"],"close":false,"duplicateOf":null}
+```
+
+Rules:
+- `labels`: array of existing label names only (omit or empty if none)
+- `close`: true only when duplicate; otherwise false
+- `duplicateOf`: issue number or null
+
+Do not add labels or close the issue yourself.
 
 Be concise but thorough. Use the repository's existing labels when possible.
-
-After handling the triggering item, mark the related notification as read.
 
 <!-- generated with workwork -->

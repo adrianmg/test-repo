@@ -22,7 +22,7 @@
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
 #
-# frontmatter-hash: 0666d65c95fa8a5b73cd5b8b7d2de4a11b37e9f9150e944a2a177e0f9d4b6399
+# frontmatter-hash: 830db8d9370ee290e9d5a9cbdf363c352e7d5193f561ed75f0358997392e594d
 
 name: "Issue Triage"
 "on":
@@ -70,6 +70,7 @@ jobs:
     permissions:
       contents: read
       issues: read
+      pull-requests: read
     env:
       DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
       GH_AW_ASSETS_ALLOWED_EXTS: ""
@@ -193,36 +194,12 @@ jobs:
           mkdir -p /tmp/gh-aw/safeoutputs
           mkdir -p /tmp/gh-aw/mcp-logs/safeoutputs
           cat > /opt/gh-aw/safeoutputs/config.json << 'GH_AW_SAFE_OUTPUTS_CONFIG_EOF'
-          {"add_comment":{"max":1},"add_labels":{"max":3},"close_issue":{"max":1,"required_labels":["duplicate"]},"missing_data":{},"missing_tool":{},"noop":{"max":1}}
+          {"add_comment":{"max":1,"target":"*"},"missing_data":{},"missing_tool":{},"noop":{"max":1}}
           GH_AW_SAFE_OUTPUTS_CONFIG_EOF
           cat > /opt/gh-aw/safeoutputs/tools.json << 'GH_AW_SAFE_OUTPUTS_TOOLS_EOF'
           [
             {
-              "description": "Close a GitHub issue with a closing comment. You can and should always add a comment when closing an issue to explain the action or provide context. This tool is ONLY for closing issues - use update_issue if you need to change the title, body, labels, or other metadata without closing. Use close_issue when work is complete, the issue is no longer relevant, or it's a duplicate. The closing comment should explain the resolution or reason for closing. If the issue is already closed, a comment will still be posted. CONSTRAINTS: Maximum 1 issue(s) can be closed.",
-              "inputSchema": {
-                "additionalProperties": false,
-                "properties": {
-                  "body": {
-                    "description": "Closing comment explaining why the issue is being closed and summarizing any resolution, workaround, or conclusion.",
-                    "type": "string"
-                  },
-                  "issue_number": {
-                    "description": "Issue number to close. This is the numeric ID from the GitHub URL (e.g., 901 in github.com/owner/repo/issues/901). If omitted, closes the issue that triggered this workflow (requires an issue event trigger).",
-                    "type": [
-                      "number",
-                      "string"
-                    ]
-                  }
-                },
-                "required": [
-                  "body"
-                ],
-                "type": "object"
-              },
-              "name": "close_issue"
-            },
-            {
-              "description": "Add a comment to an existing GitHub issue, pull request, or discussion. Use this to provide feedback, answer questions, or add information to an existing conversation. For creating new items, use create_issue, create_discussion, or create_pull_request instead. CONSTRAINTS: Maximum 1 comment(s) can be added.",
+              "description": "Add a comment to an existing GitHub issue, pull request, or discussion. Use this to provide feedback, answer questions, or add information to an existing conversation. For creating new items, use create_issue, create_discussion, or create_pull_request instead. CONSTRAINTS: Maximum 1 comment(s) can be added. Target: *.",
               "inputSchema": {
                 "additionalProperties": false,
                 "properties": {
@@ -241,27 +218,6 @@ jobs:
                 "type": "object"
               },
               "name": "add_comment"
-            },
-            {
-              "description": "Add labels to an existing GitHub issue or pull request for categorization and filtering. Labels must already exist in the repository. For creating new issues with labels, use create_issue with the labels property instead.",
-              "inputSchema": {
-                "additionalProperties": false,
-                "properties": {
-                  "item_number": {
-                    "description": "Issue or PR number to add labels to. This is the numeric ID from the GitHub URL (e.g., 456 in github.com/owner/repo/issues/456). If omitted, adds labels to the item that triggered this workflow.",
-                    "type": "number"
-                  },
-                  "labels": {
-                    "description": "Label names to add (e.g., ['bug', 'priority-high']). Labels must exist in the repository.",
-                    "items": {
-                      "type": "string"
-                    },
-                    "type": "array"
-                  }
-                },
-                "type": "object"
-              },
-              "name": "add_labels"
             },
             {
               "description": "Report that a tool or capability needed to complete the task is not available, or share any information you deem important about missing functionality or limitations. Use this when you cannot accomplish what was requested because the required functionality is missing or access is restricted.",
@@ -347,35 +303,6 @@ jobs:
                 },
                 "item_number": {
                   "issueOrPRNumber": true
-                }
-              }
-            },
-            "add_labels": {
-              "defaultMax": 5,
-              "fields": {
-                "item_number": {
-                  "issueOrPRNumber": true
-                },
-                "labels": {
-                  "required": true,
-                  "type": "array",
-                  "itemType": "string",
-                  "itemSanitize": true,
-                  "itemMaxLength": 128
-                }
-              }
-            },
-            "close_issue": {
-              "defaultMax": 1,
-              "fields": {
-                "body": {
-                  "required": true,
-                  "type": "string",
-                  "sanitize": true,
-                  "maxLength": 65000
-                },
-                "issue_number": {
-                  "optionalPositiveInteger": true
                 }
               }
             },
@@ -1072,7 +999,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"add_comment\":{\"max\":1},\"add_labels\":{},\"close_issue\":{\"max\":1,\"required_labels\":[\"duplicate\"]},\"missing_data\":{},\"missing_tool\":{}}"
+          GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"add_comment\":{\"max\":1,\"target\":\"*\"},\"missing_data\":{},\"missing_tool\":{}}"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |

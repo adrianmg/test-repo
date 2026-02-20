@@ -3,8 +3,9 @@ on:
   issues:
     types:
       - opened
-  workflow_dispatch: null
-  schedule: 0 14 * * 1-5
+  schedule:
+    - cron: "0 14 * * 1-5"
+  workflow_dispatch:
 engine: copilot
 timeout-minutes: 5
 permissions:
@@ -13,9 +14,7 @@ permissions:
   pull-requests: read
 tools:
   github:
-    toolsets:
-      - issues
-      - labels
+    toolsets: [issues, labels]
 safe-outputs:
   add-labels:
     allowed:
@@ -26,10 +25,11 @@ safe-outputs:
       - help wanted
       - good first issue
       - duplicate
+    target: "*"
   add-comment:
     target: "*"
   close-issue:
-    target: triggering
+    target: "*"
     required-labels:
       - duplicate
 strict: true

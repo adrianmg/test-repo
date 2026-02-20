@@ -4,8 +4,7 @@ on:
     types:
       - opened
   workflow_dispatch: null
-  schedule:
-    cron: 0 14 * * 1-5
+  schedule: 0 14 * * 1-5
 engine: copilot
 timeout-minutes: 5
 permissions:

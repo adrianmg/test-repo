@@ -52,7 +52,7 @@ If the issue is a duplicate, add the `duplicate` label and close it.
 After labeling, mention the issue author in a comment using this format:
 
 ```markdown
-### 🏷️ Issue Triaged
+### Issue Triaged
 
 Hi @{author}! I've categorized this issue as **{label_name}** based on the following analysis:
 

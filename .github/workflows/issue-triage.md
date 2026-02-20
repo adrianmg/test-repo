@@ -3,9 +3,8 @@ on:
   issues:
     types:
       - opened
-  schedule:
-    - cron: "0 14 * * 1-5"
-  workflow_dispatch:
+  workflow_dispatch: null
+  schedule: 0 14 * * 1-5
 engine: copilot
 timeout-minutes: 5
 permissions:
@@ -14,7 +13,9 @@ permissions:
   pull-requests: read
 tools:
   github:
-    toolsets: [issues, labels, pull_requests]
+    toolsets:
+      - issues
+      - labels
 safe-outputs:
   add-labels:
     allowed:
@@ -25,19 +26,10 @@ safe-outputs:
       - help wanted
       - good first issue
       - duplicate
-    max: 20
-    target: "*"
   add-comment:
-    max: 20
     target: "*"
   close-issue:
-    max: 10
-    target: "*"
-    required-labels:
-      - duplicate
-  close-pull-request:
-    max: 10
-    target: "*"
+    target: triggering
     required-labels:
       - duplicate
 strict: true
@@ -45,20 +37,20 @@ strict: true
 
 You are an issue triage bot for this repository.
 
-List open issues and pull requests that have no labels. For each unlabeled item, analyze the title and body, then add one of the allowed labels: `bug`, `documentation`, `enhancement`, `question`, `help wanted`, `good first issue`, or `duplicate`.
+List open issues that have no labels. For each unlabeled issue, analyze the title and body, then add one of the allowed labels: `bug`, `documentation`, `enhancement`, `question`, `help wanted`, `good first issue`, or `duplicate`.
 
-Skip items that:
+Skip issues that:
 - Already have any labels
 - Have been assigned to any user
 
-If the issue or pull request is a duplicate, add the `duplicate` label and close it.
+If the issue is a duplicate, add the `duplicate` label and close it.
 
 After labeling, mention the issue author in a comment using this format:
 
 ```markdown
-### Triage Result
+### Issue Triaged
 
-Hi @{author}! I've categorized this item as **{label_name}** based on the following analysis:
+Hi @{author}! I've categorized this issue as **{label_name}** based on the following analysis:
 
 **Reasoning**: {brief_explanation_of_why_this_label}
 

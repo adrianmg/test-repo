@@ -211,10 +211,7 @@ jobs:
                   },
                   "pull_request_number": {
                     "description": "Pull request number to close. This is the numeric ID from the GitHub URL (e.g., 432 in github.com/owner/repo/pull/432). If omitted, closes the PR that triggered this workflow (requires a pull_request event trigger).",
-                    "type": [
-                      "number",
-                      "string"
-                    ]
+                    "type": "string"
                   }
                 },
                 "required": [

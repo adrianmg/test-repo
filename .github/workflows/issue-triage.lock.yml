@@ -213,10 +213,7 @@ jobs:
                   },
                   "issue_number": {
                     "description": "Issue number to close. This is the numeric ID from the GitHub URL (e.g., 901 in github.com/owner/repo/issues/901). If omitted, closes the issue that triggered this workflow (requires an issue event trigger).",
-                    "type": [
-                      "number",
-                      "string"
-                    ]
+                    "type": "string"
                   }
                 },
                 "required": [

@@ -22,7 +22,7 @@
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"151f6d588eae2c479fe92d5fd5fad0239c719d02bb4583037a460094dee08a22","compiler_version":"v0.47.1"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"8fd2a3c06871295a8da844418e5e2df2281f700a3a079c6272233324e5b1f269","compiler_version":"v0.47.1"}
 
 name: "Issue Triage"
 "on":
@@ -371,12 +371,12 @@ jobs:
           mkdir -p /tmp/gh-aw/safeoutputs
           mkdir -p /tmp/gh-aw/mcp-logs/safeoutputs
           cat > /opt/gh-aw/safeoutputs/config.json << 'GH_AW_SAFE_OUTPUTS_CONFIG_EOF'
-          {"add_comment":{"max":20,"target":"*"},"add_labels":{"allowed":["bug","documentation","enhancement","question","help wanted","good first issue","duplicate"],"max":20,"target":"*"},"close_issue":{"max":10,"required_labels":["duplicate"],"target":"*"},"missing_data":{},"missing_tool":{},"noop":{"max":1}}
+          {"add_comment":{"max":1,"target":"*"},"add_labels":{"allowed":["bug","documentation","enhancement","question","help wanted","good first issue","duplicate"],"max":3},"close_issue":{"max":1,"required_labels":["duplicate"],"target":"triggering"},"missing_data":{},"missing_tool":{},"noop":{"max":1}}
           GH_AW_SAFE_OUTPUTS_CONFIG_EOF
           cat > /opt/gh-aw/safeoutputs/tools.json << 'GH_AW_SAFE_OUTPUTS_TOOLS_EOF'
           [
             {
-              "description": "Close a GitHub issue with a closing comment. You can and should always add a comment when closing an issue to explain the action or provide context. This tool is ONLY for closing issues - use update_issue if you need to change the title, body, labels, or other metadata without closing. Use close_issue when work is complete, the issue is no longer relevant, or it's a duplicate. The closing comment should explain the resolution or reason for closing. If the issue is already closed, a comment will still be posted. CONSTRAINTS: Maximum 10 issue(s) can be closed. Target: *.",
+              "description": "Close a GitHub issue with a closing comment. You can and should always add a comment when closing an issue to explain the action or provide context. This tool is ONLY for closing issues - use update_issue if you need to change the title, body, labels, or other metadata without closing. Use close_issue when work is complete, the issue is no longer relevant, or it's a duplicate. The closing comment should explain the resolution or reason for closing. If the issue is already closed, a comment will still be posted. CONSTRAINTS: Maximum 1 issue(s) can be closed. Target: triggering.",
               "inputSchema": {
                 "additionalProperties": false,
                 "properties": {
@@ -400,31 +400,7 @@ jobs:
               "name": "close_issue"
             },
             {
-              "description": "Close a pull request WITHOUT merging, adding a closing comment. You can and should always add a comment when closing a PR to explain the action or provide context. Use this for PRs that should be abandoned, superseded, or closed for other reasons. The closing comment should explain why the PR is being closed. This does NOT merge the changes. If the PR is already closed, a comment will still be posted. CONSTRAINTS: Maximum 10 pull request(s) can be closed. Target: *. Only PRs with labels [duplicate] can be closed.",
-              "inputSchema": {
-                "additionalProperties": false,
-                "properties": {
-                  "body": {
-                    "description": "Closing comment explaining why the PR is being closed without merging (e.g., superseded by another PR, no longer needed, approach rejected).",
-                    "type": "string"
-                  },
-                  "pull_request_number": {
-                    "description": "Pull request number to close. This is the numeric ID from the GitHub URL (e.g., 432 in github.com/owner/repo/pull/432). If omitted, closes the PR that triggered this workflow (requires a pull_request event trigger).",
-                    "type": [
-                      "number",
-                      "string"
-                    ]
-                  }
-                },
-                "required": [
-                  "body"
-                ],
-                "type": "object"
-              },
-              "name": "close_pull_request"
-            },
-            {
-              "description": "Add a comment to an existing GitHub issue, pull request, or discussion. Use this to provide feedback, answer questions, or add information to an existing conversation. For creating new items, use create_issue, create_discussion, or create_pull_request instead. IMPORTANT: Comments are subject to validation constraints enforced by the MCP server - maximum 65536 characters for the complete comment (including footer which is added automatically), 10 mentions (@username), and 50 links. Exceeding these limits will result in an immediate error with specific guidance. NOTE: By default, this tool requires discussions:write permission. If your GitHub App lacks Discussions permission, set 'discussions: false' in the workflow's safe-outputs.add-comment configuration to exclude this permission. CONSTRAINTS: Maximum 20 comment(s) can be added. Target: *.",
+              "description": "Add a comment to an existing GitHub issue, pull request, or discussion. Use this to provide feedback, answer questions, or add information to an existing conversation. For creating new items, use create_issue, create_discussion, or create_pull_request instead. IMPORTANT: Comments are subject to validation constraints enforced by the MCP server - maximum 65536 characters for the complete comment (including footer which is added automatically), 10 mentions (@username), and 50 links. Exceeding these limits will result in an immediate error with specific guidance. NOTE: By default, this tool requires discussions:write permission. If your GitHub App lacks Discussions permission, set 'discussions: false' in the workflow's safe-outputs.add-comment configuration to exclude this permission. CONSTRAINTS: Maximum 1 comment(s) can be added. Target: *.",
               "inputSchema": {
                 "additionalProperties": false,
                 "properties": {
@@ -445,7 +421,7 @@ jobs:
               "name": "add_comment"
             },
             {
-              "description": "Add labels to an existing GitHub issue or pull request for categorization and filtering. Labels must already exist in the repository. For creating new issues with labels, use create_issue with the labels property instead. CONSTRAINTS: Maximum 20 label(s) can be added. Only these labels are allowed: [bug documentation enhancement question help wanted good first issue duplicate]. Target: *.",
+              "description": "Add labels to an existing GitHub issue or pull request for categorization and filtering. Labels must already exist in the repository. For creating new issues with labels, use create_issue with the labels property instead. CONSTRAINTS: Only these labels are allowed: [bug documentation enhancement question help wanted good first issue duplicate].",
               "inputSchema": {
                 "additionalProperties": false,
                 "properties": {
@@ -689,7 +665,7 @@ jobs:
                   "GITHUB_LOCKDOWN_MODE": "$GITHUB_MCP_LOCKDOWN",
                   "GITHUB_PERSONAL_ACCESS_TOKEN": "\${GITHUB_MCP_SERVER_TOKEN}",
                   "GITHUB_READ_ONLY": "1",
-                  "GITHUB_TOOLSETS": "issues,labels,pull_requests"
+                  "GITHUB_TOOLSETS": "issues,labels"
                 }
               },
               "safeoutputs": {
@@ -1140,7 +1116,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_AGENT_OUTPUT: ${{ env.GH_AW_AGENT_OUTPUT }}
-          GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"add_comment\":{\"max\":20,\"target\":\"*\"},\"add_labels\":{\"allowed\":[\"bug\",\"documentation\",\"enhancement\",\"question\",\"help wanted\",\"good first issue\",\"duplicate\"],\"max\":20,\"target\":\"*\"},\"close_issue\":{\"max\":10,\"required_labels\":[\"duplicate\"],\"target\":\"*\"},\"close_pull_request\":{\"max\":10,\"required_labels\":[\"duplicate\"],\"target\":\"*\"},\"missing_data\":{},\"missing_tool\":{}}"
+          GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"add_comment\":{\"max\":1,\"target\":\"*\"},\"add_labels\":{\"allowed\":[\"bug\",\"documentation\",\"enhancement\",\"question\",\"help wanted\",\"good first issue\",\"duplicate\"]},\"close_issue\":{\"max\":1,\"required_labels\":[\"duplicate\"],\"target\":\"triggering\"},\"missing_data\":{},\"missing_tool\":{}}"
         with:
           github-token: ${{ secrets.GH_AW_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}
           script: |

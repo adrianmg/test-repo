@@ -13,7 +13,6 @@ permissions:
   pull-requests: read
 tools:
   github:
-    lockdown: true
     toolsets:
       - issues
       - labels

@@ -33,8 +33,6 @@ safe-outputs:
     target: triggering
     required-labels:
       - duplicate
-sandbox:
-  agent: false
 strict: true
 ---
 

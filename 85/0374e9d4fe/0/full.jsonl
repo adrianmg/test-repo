@@ -1,0 +1,2 @@
+{"info":{"id":"msg-p3-1","sessionID":"poem3-session","role":"user","time":{"created":1700000060,"completed":1700000061}},"parts":[{"type":"text","text":"Write a poem about debugging at 3am"}]}
+{"info":{"id":"msg-p3-2","sessionID":"poem3-session","role":"assistant","time":{"created":1700000062,"completed":1700000063},"summary":{"title":"Wrote poem about debugging"}},"parts":[{"type":"tool","tool":"file_write","filePath":"poems/debugging.md","state":{"status":"completed","input":"{}","output":"File written"}},{"type":"text","text":"Here's a poem about late-night debugging."}]}

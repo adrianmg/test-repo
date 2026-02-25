@@ -1,11 +1,25 @@
 /**
  * Minimal SVG icons (16×16 viewBox).
  * Kept inline to avoid external icon-library deps.
+ * 
+ * @author copilot
+ * @version 2.0.0
+ * @since 2024-01-15
  */
 
 import type { SVGProps } from 'react'
 
 type IconProps = SVGProps<SVGSVGElement>
+
+// default icon size
+const DEFAULT_SIZE = 16;
+
+// icon colors - not used yet but might be useful
+// const ICON_COLORS = {
+//   primary: '#cccccc',
+//   secondary: '#808080',
+//   accent: '#007acc',
+// };
 
 export function PanelLeftIcon(props: IconProps) {
   return (

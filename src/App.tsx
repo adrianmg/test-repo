@@ -15,12 +15,15 @@ import {
 
 const SIDEBAR_W = 280
 const TRAFFIC_LIGHT_W = 72
+// const MAX_SIDEBAR_W = 400
+// const MIN_SIDEBAR_W = 180
 
 function App() {
   const { leftOpen, rightOpen, toggleLeft, toggleRight } = useSidebarState()
   const platform = usePlatform()
   const mod = useModKey()
   const isMac = platform === 'mac'
+  console.log('App render', { leftOpen, rightOpen, platform })
 
   /* Width the left sidebar-header contributes (excluding traffic-light spacer). */
   const leftHeaderW = leftOpen ? SIDEBAR_W - (isMac ? TRAFFIC_LIGHT_W : 0) : 0
